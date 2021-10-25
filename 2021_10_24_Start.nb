@@ -1,0 +1,620 @@
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[         0,          0]
+NotebookDataLength[     23782,        619]
+NotebookOptionsPosition[     21119,        563]
+NotebookOutlinePosition[     21564,        580]
+CellTagsIndexPosition[     21521,        577]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["Scope of the work", "Section",
+ CellChangeTimes->{{3.844088073398444*^9, 
+  3.844088076636742*^9}},ExpressionUUID->"910794f2-238b-4a46-a145-\
+f3ca6b4cebd1"],
+
+Cell[BoxData[
+ RowBox[{"GeoGraphics", "[", 
+  RowBox[{
+   NamespaceBox["LinguisticAssistant",
+    DynamicModuleBox[{Typeset`query$$ = "United States", Typeset`boxes$$ = 
+     TemplateBox[{"\"United States\"", 
+       RowBox[{"Entity", "[", 
+         RowBox[{"\"Country\"", ",", "\"UnitedStates\""}], "]"}], 
+       "\"Entity[\\\"Country\\\", \\\"UnitedStates\\\"]\"", "\"country\""}, 
+      "Entity"], Typeset`allassumptions$$ = {}, Typeset`assumptions$$ = {}, 
+     Typeset`open$$ = {1, 2}, Typeset`querystate$$ = {
+     "Online" -> True, "Allowed" -> True, "mparse.jsp" -> 
+      0.88765`6.3997867509050925, "Messages" -> {}}}, 
+     DynamicBox[ToBoxes[
+       AlphaIntegration`LinguisticAssistantBoxes["", 4, Automatic, 
+        Dynamic[Typeset`query$$], 
+        Dynamic[Typeset`boxes$$], 
+        Dynamic[Typeset`allassumptions$$], 
+        Dynamic[Typeset`assumptions$$], 
+        Dynamic[Typeset`open$$], 
+        Dynamic[Typeset`querystate$$]], StandardForm],
+      ImageSizeCache->{156., {6., 14.}},
+      TrackedSymbols:>{
+       Typeset`query$$, Typeset`boxes$$, Typeset`allassumptions$$, 
+        Typeset`assumptions$$, Typeset`open$$, Typeset`querystate$$}],
+     DynamicModuleValues:>{},
+     UndoTrackedVariables:>{Typeset`open$$}],
+    BaseStyle->{"Deploy"},
+    DeleteWithContents->True,
+    Editable->False,
+    SelectWithContents->True], ",", "\n", 
+   RowBox[{"GeoProjection", "\[Rule]", "\"\<Mercator\>\""}], ",", "\n", 
+   RowBox[{"Frame", "\[Rule]", "True"}], ",", "\n", 
+   RowBox[{"GeoRange", "\[Rule]", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"22.", ",", " ", "51."}], "}"}], ",", " ", 
+      RowBox[{"{", 
+       RowBox[{"233", ",", " ", "294"}], "}"}]}], "}"}]}]}], "]"}]], "Code",
+ CellChangeTimes->{
+  3.844166738299123*^9, {3.844175460533168*^9, 
+   3.8441754892442513`*^9}},ExpressionUUID->"5f6ee29f-3421-4d17-9a87-\
+bc306fbd0117"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Data", "Section",
+ CellChangeTimes->{{3.844089560877787*^9, 
+  3.8440895621116457`*^9}},ExpressionUUID->"10f02f5a-a489-4277-ac66-\
+353488b2989a"],
+
+Cell[CellGroupData[{
+
+Cell["CFSR", "Subsection",
+ CellChangeTimes->{{3.844090781364478*^9, 
+  3.8440907910946703`*^9}},ExpressionUUID->"83b8c218-8fe5-4d4b-b95d-\
+529e327e85e8"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"vars", "=", 
+   RowBox[{"{", 
+    RowBox[{
+    "\"\<z1000\>\"", ",", "\"\<z850\>\"", ",", "\"\<z500\>\"", ",", 
+     "\"\<z200\>\"", ",", "\"\<q925\>\"", ",", "\"\<q850\>\"", ",", 
+     "\"\<q500\>\"", ",", "\"\<prmsl\>\""}], "}"}]}], ";"}]], "Code",
+ CellChangeTimes->{
+  3.8440905288343287`*^9, {3.844093150209144*^9, 3.844093150814309*^9}},
+ CellLabel->"In[1]:=",ExpressionUUID->"3155e055-23ff-442c-b413-7eb2fa46e7d1"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"dates", "=", 
+   RowBox[{"DateRange", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"1979", ",", "1", ",", "1"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"2011", ",", "3", ",", "1"}], "}"}], ",", "\"\<Month\>\""}], 
+    "]"}]}], ";"}]], "Code",
+ CellChangeTimes->{{3.844089816598846*^9, 3.84408983575364*^9}, 
+   3.844089976684451*^9, {3.844090524023425*^9, 3.844090530749053*^9}},
+ CellLabel->"In[2]:=",ExpressionUUID->"9ef81fa2-d7b3-4e27-9652-d0425f14f2e8"],
+
+Cell[BoxData[
+ RowBox[{"(*", 
+  RowBox[{
+   RowBox[{
+   "SetDirectory", "[", "\"\</Users/lambda/Documents/ADownscaling/Data/\>\"", 
+    "]"}], ";"}], "*)"}]], "Code",
+ CellChangeTimes->{{3.8441018126635323`*^9, 3.8441018184885273`*^9}, 
+   3.84410302882635*^9},
+ CellLabel->"In[3]:=",ExpressionUUID->"d1498d63-f1b6-4a25-9e59-a8501fd83581"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"SetDirectory", "[", "\"\</Volumes/lambda/CFSR\>\"", "]"}], 
+  ";"}]], "Code",
+ CellChangeTimes->{{3.844102962167948*^9, 3.84410296530002*^9}, {
+  3.8441033610430937`*^9, 3.844103362008874*^9}},
+ CellLabel->"In[4]:=",ExpressionUUID->"39d6c021-70de-4eaf-aec0-2f8f5d45a96d"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"script", "=", 
+   RowBox[{"Flatten", "[", 
+    RowBox[{"Table", "[", 
+     RowBox[{
+      RowBox[{"Block", "[", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"date", "=", 
+          RowBox[{"DateString", "[", 
+           RowBox[{
+            RowBox[{"dates", "[", 
+             RowBox[{"[", "i", "]"}], "]"}], ",", 
+            RowBox[{"{", 
+             RowBox[{"\"\<Year\>\"", ",", "\"\<Month\>\""}], "}"}]}], "]"}]}],
+          "}"}], ",", 
+        RowBox[{
+        "\"\<wget -nc \
+https://www.ncei.noaa.gov/data/climate-forecast-system/access/reanalysis/time-\
+series/\>\"", "<>", "date", "<>", "\"\</\>\"", "<>", 
+         RowBox[{"vars", "[", 
+          RowBox[{"[", "j", "]"}], "]"}], "<>", "\"\<.gdas.\>\"", "<>", 
+         "date", "<>", "\"\<.grb2\>\""}]}], "]"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"i", ",", 
+        RowBox[{"Length", "[", "dates", "]"}]}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"j", ",", 
+        RowBox[{"Length", "[", "vars", "]"}]}], "}"}]}], "]"}], "]"}]}], 
+  ";"}]], "Code",
+ CellChangeTimes->{{3.844089844649947*^9, 3.844089970206642*^9}, {
+  3.8440903584519444`*^9, 3.844090359013516*^9}},
+ CellLabel->"In[5]:=",ExpressionUUID->"560a16b4-9d8a-470e-a4b6-50ec384a6b5a"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Export", "[", 
+  RowBox[{
+  "\"\<reanalysis_1979-2011.sh\>\"", ",", "script", ",", "\"\<Table\>\""}], 
+  "]"}]], "Code",
+ CellChangeTimes->{{3.844089978160973*^9, 3.844089979351049*^9}, {
+  3.84409004793806*^9, 3.844090072592659*^9}, {3.844101799525613*^9, 
+  3.844101809660182*^9}},
+ CellLabel->"In[6]:=",ExpressionUUID->"6370937d-d0e8-4730-99f0-4581caaeae44"],
+
+Cell[BoxData["\<\"reanalysis_1979-2011.sh\"\>"], "Output",
+ CellChangeTimes->{3.8440900730525503`*^9, 3.8440931557488623`*^9, 
+  3.8441019012325077`*^9, 3.844103032838257*^9, 3.844104408144088*^9, 
+  3.844110723036565*^9, 3.8441110995040693`*^9, 3.8441115030085163`*^9, 
+  3.844111938612466*^9, 3.844114357764393*^9, 3.844114963610888*^9, 
+  3.844121439199245*^9, 3.844125405850514*^9, 3.844130980582374*^9, 
+  3.8441667322968073`*^9, 3.844175487521397*^9, 3.844182371177705*^9, 
+  3.844188120860465*^9},
+ CellLabel->"Out[6]=",ExpressionUUID->"d528a380-fdf2-437d-bfd2-ba3559e24638"]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"dates", "=", 
+   RowBox[{"DateRange", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"2011", ",", "4", ",", "1"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"2020", ",", "9", ",", "1"}], "}"}], ",", "\"\<Month\>\""}], 
+    "]"}]}], ";"}]], "Code",
+ CellChangeTimes->{{3.844090500060831*^9, 3.8440905177986794`*^9}},
+ CellLabel->"In[7]:=",ExpressionUUID->"bd8e21f7-d642-444d-a961-ea73aea9aad1"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"script", "=", 
+   RowBox[{"Flatten", "[", 
+    RowBox[{"Table", "[", 
+     RowBox[{
+      RowBox[{"Table", "[", 
+       RowBox[{
+        RowBox[{"DateString", "[", 
+         RowBox[{
+          RowBox[{"dates", "[", 
+           RowBox[{"[", "i", "]"}], "]"}], ",", 
+          RowBox[{"{", 
+           RowBox[{
+           "\"\<wget -nc \
+https://www.ncei.noaa.gov/data/climate-forecast-system/access/operational-\
+analysis/time-series/\>\"", ",", "\"\<Year\>\"", ",", "\"\</\>\"", ",", 
+            "\"\<Year\>\"", ",", "\"\<Month\>\"", ",", "\"\</\>\"", ",", 
+            RowBox[{"vars", "[", 
+             RowBox[{"[", "j", "]"}], "]"}], ",", "\"\<.gdas.\>\"", ",", 
+            "\"\<Year\>\"", ",", "\"\<Month\>\"", ",", "\"\<.grib2\>\""}], 
+           "}"}]}], "]"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"j", ",", 
+          RowBox[{"Length", "[", "vars", "]"}]}], "}"}]}], "]"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"i", ",", 
+        RowBox[{"Length", "[", "dates", "]"}]}], "}"}]}], "]"}], "]"}]}], 
+  ";"}]], "Code",
+ CellChangeTimes->{{3.844090540430645*^9, 3.844090541990211*^9}, {
+  3.8440905878809443`*^9, 3.844090708102871*^9}},
+ CellLabel->"In[8]:=",ExpressionUUID->"93afe366-1037-47a1-b862-861211320352"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Export", "[", 
+  RowBox[{
+  "\"\<reanalysis_2011-2021.sh\>\"", ",", "script", ",", "\"\<Table\>\""}], 
+  "]"}]], "Code",
+ CellChangeTimes->{{3.844090712501326*^9, 3.844090717420663*^9}, {
+  3.8441018035989313`*^9, 3.8441018239280357`*^9}},
+ CellLabel->"In[9]:=",ExpressionUUID->"db164885-28d9-4fed-aff9-44dcfe3292e5"],
+
+Cell[BoxData["\<\"reanalysis_2011-2021.sh\"\>"], "Output",
+ CellChangeTimes->{3.844090718167933*^9, 3.8440931605128202`*^9, 
+  3.844101901603404*^9, 3.844103036524947*^9, 3.844104408486087*^9, 
+  3.844110723442424*^9, 3.844111099812727*^9, 3.844111503415421*^9, 
+  3.844111938941596*^9, 3.8441143580770693`*^9, 3.84411496390347*^9, 
+  3.8441214394787893`*^9, 3.844125406151643*^9, 3.844130980911729*^9, 
+  3.844166732585397*^9, 3.844175487857068*^9, 3.844182371521393*^9, 
+  3.844188121286047*^9},
+ CellLabel->"Out[9]=",ExpressionUUID->"701d106b-fe86-43ce-8e40-ea083543e409"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Data processing", "Section",
+ CellChangeTimes->{{3.844090775821313*^9, 
+  3.84409077804638*^9}},ExpressionUUID->"d5e1a3d2-7e3c-45a0-ba9b-\
+53e6ddbfb5b6"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"<<", "JLink`"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"InstallJava", "[", "]"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"ReinstallJava", "[", 
+   RowBox[{"JVMArguments", " ", "->", " ", "\"\<-Xmx6512m\>\""}], "]"}], 
+  ";"}]}], "Code",
+ CellChangeTimes->{3.8440916998163357`*^9},
+ CellLabel->"In[11]:=",ExpressionUUID->"670b96e1-d5a9-4ef2-9148-982de5773e7b"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"vars", "=", 
+   RowBox[{"{", 
+    RowBox[{
+    "\"\<z1000\>\"", ",", "\"\<z850\>\"", ",", "\"\<z500\>\"", ",", 
+     "\"\<z200\>\"", ",", "\"\<q925\>\"", ",", "\"\<q850\>\"", ",", 
+     "\"\<q500\>\"", ",", "\"\<prmsl\>\""}], "}"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"dates", "=", 
+   RowBox[{"DateRange", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"1979", ",", "1", ",", "1"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"2021", ",", "9", ",", "1"}], "}"}], ",", "\"\<Month\>\""}], 
+    "]"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"names", "=", 
+   RowBox[{
+    RowBox[{"Map", "[", 
+     RowBox[{"Import", ",", 
+      RowBox[{"Table", "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"FileNames", "[", 
+          RowBox[{
+           RowBox[{"vars", "[", 
+            RowBox[{"[", "i", "]"}], "]"}], "<>", "\"\<*\>\"", "<>", 
+           RowBox[{"DateString", "[", 
+            RowBox[{
+             RowBox[{"dates", "[", 
+              RowBox[{"[", "1", "]"}], "]"}], ",", 
+             RowBox[{"{", 
+              RowBox[{"\"\<Year\>\"", ",", "\"\<Month\>\""}], "}"}]}], "]"}], 
+           "<>", "\"\<*\>\""}], "]"}], "[", 
+         RowBox[{"[", "1", "]"}], "]"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"i", ",", 
+          RowBox[{"Length", "[", "vars", "]"}]}], "}"}]}], "]"}]}], "]"}], 
+    "[", 
+    RowBox[{"[", 
+     RowBox[{";;", ",", "1"}], "]"}], "]"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"lat", ",", "lon"}], "}"}], "=", 
+   RowBox[{"Import", "[", 
+    RowBox[{"\"\<z1000.gdas.197901.grb2\>\"", ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<Datasets\>\"", ",", 
+       RowBox[{"{", 
+        RowBox[{"\"\<lat\>\"", ",", "\"\<lon\>\""}], "}"}]}], "}"}]}], 
+    "]"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"scope", "=", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"22.", ",", " ", "51."}], "}"}], ",", " ", 
+     RowBox[{"{", 
+      RowBox[{"233.", ",", " ", "294."}], "}"}]}], "}"}]}], ";"}]}], "Code",
+ CellChangeTimes->{{3.844091734654344*^9, 3.844091763247427*^9}, 
+   3.844092120144936*^9, {3.844092994251966*^9, 3.84409300060054*^9}, 
+   3.844101909708232*^9, {3.844102177561656*^9, 3.8441021845258636`*^9}, 
+   3.844103283337715*^9, {3.8441033723488903`*^9, 3.844103372654599*^9}},
+ CellLabel->"In[14]:=",ExpressionUUID->"4103159b-621d-4468-a0f7-51d62b718358"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"position", "=", 
+  RowBox[{"{", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"Position", "[", 
+        RowBox[{"lat", ",", 
+         RowBox[{"scope", "[", 
+          RowBox[{"[", 
+           RowBox[{"1", ",", "1"}], "]"}], "]"}]}], "]"}], "[", 
+       RowBox[{"[", 
+        RowBox[{"1", ",", "1"}], "]"}], "]"}], ",", 
+      RowBox[{
+       RowBox[{"Position", "[", 
+        RowBox[{"lat", ",", 
+         RowBox[{"scope", "[", 
+          RowBox[{"[", 
+           RowBox[{"1", ",", "2"}], "]"}], "]"}]}], "]"}], "[", 
+       RowBox[{"[", 
+        RowBox[{"1", ",", "1"}], "]"}], "]"}]}], "}"}], ",", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"Position", "[", 
+        RowBox[{"lon", ",", 
+         RowBox[{"scope", "[", 
+          RowBox[{"[", 
+           RowBox[{"2", ",", "1"}], "]"}], "]"}]}], "]"}], "[", 
+       RowBox[{"[", 
+        RowBox[{"1", ",", "1"}], "]"}], "]"}], ",", 
+      RowBox[{
+       RowBox[{"Position", "[", 
+        RowBox[{"lon", ",", 
+         RowBox[{"scope", "[", 
+          RowBox[{"[", 
+           RowBox[{"2", ",", "2"}], "]"}], "]"}]}], "]"}], "[", 
+       RowBox[{"[", 
+        RowBox[{"1", ",", "1"}], "]"}], "]"}]}], "}"}]}], "}"}]}]], "Code",
+ CellChangeTimes->{{3.844092232392086*^9, 3.844092287187974*^9}},
+ CellLabel->"In[19]:=",ExpressionUUID->"1e48e7fa-e64e-4c11-8f35-4d0b32630c0f"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"137", ",", "79"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"467", ",", "589"}], "}"}]}], "}"}]], "Output",
+ CellChangeTimes->{{3.8440922392240353`*^9, 3.844092243090559*^9}, {
+   3.844092273833922*^9, 3.844092287493847*^9}, 3.844093261799809*^9, 
+   3.844102297938239*^9, 3.844103320394018*^9, 3.8441034653711348`*^9, {
+   3.844103518321624*^9, 3.844103530254381*^9}, 3.8441044191021433`*^9, 
+   3.844110872297228*^9, 3.84411110213299*^9, 3.844111510672263*^9, 
+   3.84411205909269*^9, 3.8441144890733852`*^9, 3.8441149665479403`*^9, 
+   3.844121442278529*^9, 3.84412540932411*^9, 3.8441309834032297`*^9, 
+   3.844166735414466*^9, 3.844175685867622*^9, 3.8441825048863277`*^9, 
+   3.844188138649147*^9},
+ CellLabel->"Out[19]=",ExpressionUUID->"34e41bcf-633b-46e6-9ddd-87a16f90fcb1"]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"ParallelTable", "[", 
+   RowBox[{
+    RowBox[{"Block", "[", 
+     RowBox[{
+      RowBox[{"{", "files", "}"}], ",", "\n", "\t", 
+      RowBox[{
+       RowBox[{"<<", "JLink`"}], ";", 
+       RowBox[{"InstallJava", "[", "]"}], ";", 
+       RowBox[{"ReinstallJava", "[", 
+        RowBox[{"JVMArguments", " ", "->", " ", "\"\<-Xmx29512m\>\""}], "]"}],
+        ";", "\n", "\t", 
+       RowBox[{"files", "=", 
+        RowBox[{"Flatten", "[", 
+         RowBox[{"Table", "[", 
+          RowBox[{
+           RowBox[{"FileNames", "[", 
+            RowBox[{
+             RowBox[{"vars", "[", 
+              RowBox[{"[", "i", "]"}], "]"}], "<>", "\"\<*\>\"", "<>", 
+             RowBox[{"DateString", "[", 
+              RowBox[{
+               RowBox[{"dates", "[", 
+                RowBox[{"[", "d", "]"}], "]"}], ",", 
+               RowBox[{"{", 
+                RowBox[{"\"\<Year\>\"", ",", "\"\<Month\>\""}], "}"}]}], 
+              "]"}], "<>", "\"\<*grb2\>\""}], "]"}], ",", 
+           RowBox[{"{", 
+            RowBox[{"i", ",", 
+             RowBox[{"Length", "[", "vars", "]"}]}], "}"}]}], "]"}], "]"}]}], 
+       ";", "\n", "\t", 
+       RowBox[{"If", "[", 
+        RowBox[{
+         RowBox[{"And", "[", 
+          RowBox[{
+           RowBox[{"Not", "[", 
+            RowBox[{"FileExistsQ", "[", 
+             RowBox[{"DateString", "[", 
+              RowBox[{
+               RowBox[{"dates", "[", 
+                RowBox[{"[", "d", "]"}], "]"}], ",", 
+               RowBox[{"{", 
+                RowBox[{
+                "\"\<CONUS_\>\"", ",", "\"\<Year\>\"", ",", "\"\<_\>\"", ",", 
+                 "\"\<Month\>\"", ",", "\"\<.mx\>\""}], "}"}]}], "]"}], "]"}],
+             "]"}], ",", 
+           RowBox[{
+            RowBox[{"Length", "[", "files", "]"}], "==", 
+            RowBox[{"Length", "[", "vars", "]"}]}]}], "]"}], ",", "\n", 
+         "     ", 
+         RowBox[{"Block", "[", 
+          RowBox[{
+           RowBox[{"{", "data", "}"}], ",", "\n", "     ", 
+           RowBox[{
+            RowBox[{"Print", "[", 
+             RowBox[{"Length", "[", "files", "]"}], "]"}], ";", 
+            RowBox[{"Print", "[", 
+             RowBox[{"dates", "[", 
+              RowBox[{"[", "d", "]"}], "]"}], "]"}], ";", "\n", "\t ", 
+            RowBox[{"data", "=", 
+             RowBox[{"Table", "[", 
+              RowBox[{
+               RowBox[{"Block", "[", 
+                RowBox[{
+                 RowBox[{"{", 
+                  RowBox[{"tempt", "=", 
+                   RowBox[{"Import", "[", 
+                    RowBox[{
+                    RowBox[{"files", "[", 
+                    RowBox[{"[", "i", "]"}], "]"}], ",", 
+                    RowBox[{"{", 
+                    RowBox[{"\"\<Datasets\>\"", ",", 
+                    RowBox[{"names", "[", 
+                    RowBox[{"[", "i", "]"}], "]"}]}], "}"}]}], "]"}]}], "}"}],
+                  ",", 
+                 RowBox[{"ArrayReshape", "[", 
+                  RowBox[{"tempt", ",", 
+                   RowBox[{"DeleteCases", "[", 
+                    RowBox[{
+                    RowBox[{"Dimensions", "[", "tempt", "]"}], ",", "1"}], 
+                    "]"}]}], "]"}]}], "]"}], ",", 
+               RowBox[{"{", 
+                RowBox[{"i", ",", 
+                 RowBox[{"Length", "[", "names", "]"}]}], "}"}]}], "]"}]}], 
+            ";", "\n", "\t ", 
+            RowBox[{"data", "=", 
+             RowBox[{"NumericArray", "[", 
+              RowBox[{
+               RowBox[{"data", "[", 
+                RowBox[{"[", 
+                 RowBox[{";;", ",", ";;", ",", 
+                  RowBox[{
+                   RowBox[{"position", "[", 
+                    RowBox[{"[", 
+                    RowBox[{"1", ",", "2"}], "]"}], "]"}], ";;", 
+                   RowBox[{"position", "[", 
+                    RowBox[{"[", 
+                    RowBox[{"1", ",", "1"}], "]"}], "]"}]}], ",", 
+                  RowBox[{
+                   RowBox[{"position", "[", 
+                    RowBox[{"[", 
+                    RowBox[{"2", ",", "1"}], "]"}], "]"}], ";;", 
+                   RowBox[{"position", "[", 
+                    RowBox[{"[", 
+                    RowBox[{"2", ",", "2"}], "]"}], "]"}]}]}], "]"}], "]"}], 
+               ",", "\"\<Real32\>\""}], "]"}]}], ";", "\n", "\t ", 
+            RowBox[{"Export", "[", 
+             RowBox[{
+              RowBox[{"DateString", "[", 
+               RowBox[{
+                RowBox[{"dates", "[", 
+                 RowBox[{"[", "d", "]"}], "]"}], ",", 
+                RowBox[{"{", 
+                 RowBox[{
+                 "\"\<CONUS_\>\"", ",", "\"\<Year\>\"", ",", "\"\<_\>\"", 
+                  ",", "\"\<Month\>\"", ",", "\"\<.mx\>\""}], "}"}]}], "]"}], 
+              ",", 
+              RowBox[{"<|", 
+               RowBox[{
+                RowBox[{"\"\<data\>\"", "->", "data"}], ",", 
+                RowBox[{"\"\<description\>\"", "->", "vars"}], ",", 
+                RowBox[{"\"\<lat\>\"", "->", 
+                 RowBox[{"lat", "[", 
+                  RowBox[{"[", 
+                   RowBox[{
+                    RowBox[{"position", "[", 
+                    RowBox[{"[", 
+                    RowBox[{"1", ",", "2"}], "]"}], "]"}], ";;", 
+                    RowBox[{"position", "[", 
+                    RowBox[{"[", 
+                    RowBox[{"1", ",", "1"}], "]"}], "]"}]}], "]"}], "]"}]}], 
+                ",", 
+                RowBox[{"\"\<lon\>\"", "->", 
+                 RowBox[{"lon", "[", 
+                  RowBox[{"[", 
+                   RowBox[{
+                    RowBox[{"position", "[", 
+                    RowBox[{"[", 
+                    RowBox[{"2", ",", "1"}], "]"}], "]"}], ";;", 
+                    RowBox[{"position", "[", 
+                    RowBox[{"[", 
+                    RowBox[{"2", ",", "2"}], "]"}], "]"}]}], "]"}], "]"}]}]}],
+                "|>"}]}], "]"}], ";"}]}], "]"}]}], "]"}]}]}], "]"}], ",", 
+    "\n", "\t", 
+    RowBox[{"(*", " ", 
+     RowBox[{"{", 
+      RowBox[{"d", ",", 
+       RowBox[{"RandomSample", "[", 
+        RowBox[{"Range", "[", 
+         RowBox[{"Length", "[", "dates", "]"}], "]"}], "]"}]}], "}"}], "*)"}],
+     "\n", "\t ", 
+    RowBox[{"{", 
+     RowBox[{"d", ",", 
+      RowBox[{"Length", "[", "dates", "]"}]}], "}"}]}], "]"}], ";"}]], "Code",\
+
+ CellChangeTimes->{3.844188132251091*^9},
+ CellLabel->"In[20]:=",ExpressionUUID->"6e7fe3eb-5c53-44a7-b177-6738d6b0344e"]
+}, Open  ]]
+},
+WindowSize->{Full, Full},
+WindowMargins->{{28, Automatic}, {36, Automatic}},
+TaggingRules->Association["TryRealOnly" -> False],
+FrontEndVersion->"12.3 for Mac OS X x86 (64-bit) (July 9, 2021)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"f3c57a7a-18aa-4690-bbdc-24286bdfa341"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[422, 15, 162, 3, 67, "Section",ExpressionUUID->"910794f2-238b-4a46-a145-f3ca6b4cebd1"],
+Cell[587, 20, 1891, 43, 124, "Code",ExpressionUUID->"5f6ee29f-3421-4d17-9a87-bc306fbd0117"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[2515, 68, 151, 3, 67, "Section",ExpressionUUID->"10f02f5a-a489-4277-ac66-353488b2989a"],
+Cell[CellGroupData[{
+Cell[2691, 75, 154, 3, 54, "Subsection",ExpressionUUID->"83b8c218-8fe5-4d4b-b95d-529e327e85e8"],
+Cell[2848, 80, 456, 10, 52, "Code",ExpressionUUID->"3155e055-23ff-442c-b413-7eb2fa46e7d1"],
+Cell[3307, 92, 506, 12, 52, "Code",ExpressionUUID->"9ef81fa2-d7b3-4e27-9652-d0425f14f2e8"],
+Cell[3816, 106, 339, 8, 52, "Code",ExpressionUUID->"d1498d63-f1b6-4a25-9e59-a8501fd83581"],
+Cell[4158, 116, 306, 6, 52, "Code",ExpressionUUID->"39d6c021-70de-4eaf-aec0-2f8f5d45a96d"],
+Cell[4467, 124, 1265, 33, 52, "Code",ExpressionUUID->"560a16b4-9d8a-470e-a4b6-50ec384a6b5a"],
+Cell[CellGroupData[{
+Cell[5757, 161, 385, 8, 52, "Code",ExpressionUUID->"6370937d-d0e8-4730-99f0-4581caaeae44"],
+Cell[6145, 171, 582, 8, 34, "Output",ExpressionUUID->"d528a380-fdf2-437d-bfd2-ba3559e24638"]
+}, Open  ]],
+Cell[6742, 182, 437, 11, 52, "Code",ExpressionUUID->"bd8e21f7-d642-444d-a961-ea73aea9aad1"],
+Cell[7182, 195, 1266, 31, 52, "Code",ExpressionUUID->"93afe366-1037-47a1-b862-861211320352"],
+Cell[CellGroupData[{
+Cell[8473, 230, 341, 7, 52, "Code",ExpressionUUID->"db164885-28d9-4fed-aff9-44dcfe3292e5"],
+Cell[8817, 239, 575, 8, 34, "Output",ExpressionUUID->"701d106b-fe86-43ce-8e40-ea083543e409"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[9453, 254, 159, 3, 67, "Section",ExpressionUUID->"d5e1a3d2-7e3c-45a0-ba9b-53e6ddbfb5b6"],
+Cell[9615, 259, 386, 10, 91, "Code",ExpressionUUID->"670b96e1-d5a9-4ef2-9148-982de5773e7b"],
+Cell[10004, 271, 2386, 66, 129, "Code",ExpressionUUID->"4103159b-621d-4468-a0f7-51d62b718358"],
+Cell[CellGroupData[{
+Cell[12415, 341, 1397, 41, 52, "Code",ExpressionUUID->"1e48e7fa-e64e-4c11-8f35-4d0b32630c0f"],
+Cell[13815, 384, 854, 16, 34, "Output",ExpressionUUID->"34e41bcf-633b-46e6-9ddd-87a16f90fcb1"]
+}, Open  ]],
+Cell[14684, 403, 6419, 157, 243, "Code",ExpressionUUID->"6e7fe3eb-5c53-44a7-b177-6738d6b0344e"]
+}, Open  ]]
+}
+]
+*)
+
