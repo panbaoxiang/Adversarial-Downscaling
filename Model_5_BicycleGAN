@@ -137,4 +137,29 @@ SRNet=NetInitialize[NetGraph[<|"VAE_DynamicNet"->VAEDynamicNet,
 	"Po_0"->dOutput,
 	"VAE_Random"->dLatent,
 	"LR_Random"->dLatent]]
+	
+	
+batch=32;
+NetTrain[SRNet,
+   {Function[Block[{Nmonth=8,m,d},
+        m=RandomSample[Range[Length[months]],Nmonth];
+        d=Map[RandomSample[Range[Length[p[[#]]]],batch/Nmonth]&,m];
+        <|"Static"->Table[ele,batch],
+          "Dynamics"->Flatten[Table[Table[dynamics[[m[[i]]]][[;;,(d[[i,j]]-1)*3+1;;d[[i,j]]*3]],{j,Length[d[[i]]]}],{i,Length[m]}]],
+          "Po_0"->Flatten[Table[Table[p[[m[[i]]]][[d[[i,j]]]],{j,Length[d[[i]]]}],{i,Length[m]}]],
+          "LR_Random"->Table[RandomReal[NormalDistribution[0,1],dLatent],batch],
+          "VAE_Random"->Table[RandomReal[NormalDistribution[0,1],dLatent],batch]|>]],
+       "RoundLength" -> Total[Map[Length[#]&,p]]},
+    LossFunction ->{"VAE_Fake_Loss"->Scaled[1],"VAE_True_Loss"->Scaled[1],"VAE_MSE_Loss"->Scaled[-5],"KL_Loss"->Scaled[-0.01],
+                    "LR_Fake_Loss"->Scaled[1],"LR_True_Loss"->Scaled[1],"LR_MSE_Loss"->Scaled[-0.5]},
+    TrainingUpdateSchedule -> {"VAE_Discriminator","LR_Discriminator","VAE_Encoder","LR_Encoder","StaticNet","VAE_DynamicNet","LR_DynamicNet"},
+    LearningRateMultipliers -> {"VAE_Discriminator" -> 1, "LR_Discriminator"->1,
+                                "VAE_Encoder"->-1,"LR_Encoder"->-1,
+                                "StaticNet"->-1,
+                                "VAE_DynamicNet"->-1,"LR_DynamicNet"->-1,
+                                "VAE_Scale"->0,"LR_Scale"->0},
+    BatchSize -> 32,
+    TargetDevice->"GPU",
+    MaxTrainingRounds->1000,
+    Method -> {"ADAM", "Beta1" -> 0.5, "LearningRate" -> 10^-4, "WeightClipping" -> {"VAE_Discriminator"->.5*10^-1,"LR_Discriminator"->.5*10^-1}}]
   
