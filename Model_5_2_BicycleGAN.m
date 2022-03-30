@@ -45,7 +45,7 @@ DynamicNet=Block[{c=cDynamic,c2=cDynamic+cStatic+dLatent},
    {NetPort["Dynamics"]->"resize0"->"cate0",
     NetPort["Latent"]->"latent"->"cate0",
         NetPort["Static0"]->"cate0"->"up0"->"output0"->NetPort["P_0"]},
-"Dynamics"->dD,
+"Dynamics"->dDynamic,
 "Static0"->NetExtract[StaticNet,"Down3"],
 "Latent"->dLatent]];
 
