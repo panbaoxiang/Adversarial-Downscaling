@@ -1,6 +1,6 @@
 (*regression model*)
 SetDirectory["/data/home/scy0446/run/Data"];
-months=DateRange[{2004,1,1},{2006,12,1},"Month"];
+months=DateRange[{2004,9,1},{2004,9,30},"Month"];
 p=Table[Block[{},Print[months[[i]]];Import["N_"<>DateString[months[[i]],{"CONUS_","Year","Month",".mx"}]]["data"]],{i,Length[months]}];
 
 ele=NumericArray[{Log[Normal[Import["/data/home/scy0446/run/Data/CONUS/Elevation.mx"]["data"]]+1.]},"Real32"];
@@ -17,14 +17,14 @@ dynamics=Table[Block[{},Print[months[[i]]];Import[DateString[months[[i]],{"D_CON
 net=SRNet=Import["/data/home/scy0446/run/Code/trained_Res.mx"];
 
 
-validation=Block[{select=30,day},
-  day=Table[RandomSample[Range[Length[p[[i,1]]]],select],{i,-24,-1}];
-  Flatten[Table[<|"Dynamics"->dynamics[[i,;;,(day[[i,j]]-1)*3+1;;day[[i,j]]*3]],
+validation=Block[{day},
+  day=Range[Length[p[[1,1]]]];
+  Flatten[Table[<|"Dynamics"->dynamics[[i,;;,(day[[j]]-1)*3+1;;day[[j]]*3]],
     "Static"->ele,
-    "P_0"->p[[i,1,day[[i,j]]]],
-    "P_1"->p[[i,2,day[[i,j]]]],
-    "P_2"->p[[i,3,day[[i,j]]]],
-    "P_3"->p[[i,4,day[[i,j]]]]|>,{j,select},{i,-24,-1}]]];
+    "P_0"->p[[i,1,day[[j]]]],
+    "P_1"->p[[i,2,day[[j]]]],
+    "P_2"->p[[i,3,day[[j]]]],
+    "P_3"->p[[i,4,day[[j]]]]|>,{j,Length[day]},{i,1}]]];
 
 
 obserP0=validation[[;;,"P_0"]];
@@ -45,7 +45,7 @@ corr=Quiet[{Table[Correlation[simuP0[[;;,1,i,j]],obserP0[[;;,1,i,j]]],{i,Dimensi
                       Table[Correlation[simuP3[[;;,1,i,j]],obserP3[[;;,1,i,j]]],{i,Dimensions[simuP3][[3]]},{j,Dimensions[simuP3][[4]]}]}];
 Print[Map[Mean[Select[Flatten[#],NumberQ]]&,corr]];
 
-Export["/data/home/scy0446/run/Regression_Result.mx",
+Export["/data/home/scy0446/run/Regression_Result_2004_Sep.mx",
  <|"simu"->Map[NumericArray[#,"Real32"]&,{simuP0,simuP1,simuP2,simuP3}],
    "obser"->Map[NumericArray[#,"Real32"]&,{obserP0,obserP1,obserP2,obserP3}],
    "description"->"mm/3h from 2004-2006 for validation set"|>];
