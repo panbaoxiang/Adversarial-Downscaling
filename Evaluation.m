@@ -39,3 +39,8 @@ corr=Quiet[{Table[Correlation[simuP0[[;;,1,i,j]],obserP0[[;;,1,i,j]]],{i,Dimensi
                       Table[Correlation[simuP2[[;;,1,i,j]],obserP2[[;;,1,i,j]]],{i,Dimensions[simuP2][[3]]},{j,Dimensions[simuP2][[4]]}],
                       Table[Correlation[simuP3[[;;,1,i,j]],obserP3[[;;,1,i,j]]],{i,Dimensions[simuP3][[3]]},{j,Dimensions[simuP3][[4]]}]}];
 Print[Map[Mean[Select[Flatten[#],NumberQ]]&,corr]];
+
+Export["/data/home/scy0446/run/Regression_Result.mx",
+ <|"simu"->Map[NumericArray[#,"Real32"]&,{simuP0,simuP1,simuP2,simuP3}],
+   "obser"->Map[NumericArray[#,"Real32"]&,{obserP0,obserP1,obserP2,obserP3}],
+   "description"->"mm/3h from 2004-2006 for validation set"|>];
