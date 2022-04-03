@@ -185,6 +185,20 @@ Report[net_]:=Block[{obser,simu,snet,corr,snet2,simu2,corr2},
         corr2=Quiet[Table[Correlation[simu2[[;;,i,j]],obser[[;;,i,j]]],{i,40},{j,80}]];
         Print[{Mean[Select[Flatten[corr],NumberQ]],Mean[Select[Flatten[corr2],NumberQ]],corrR}];];
   
+Report[net_]:=Block[{select,obser,simu1,simu2,snet,snet2,raw,simuO,l=3},
+		select=RandomSample[Range[Length[validation]]][[1;;l]];
+        obser=validation[[select,"Po_0"]][[;;,1]];
+        raw=validation[[select,"Ps_0"]][[;;,1]];
+        snet=NetTake[net,"LR_DynamicNet"];
+        snet2=NetTake[net,"VAE_DynamicNet"];
+        simu1=snet[<|"Ps_0"->validation[[select,"Ps_0"]],"LR_Random"->Table[RandomReal[NormalDistribution[0,1],dLatent*10],Length[select]]|>][[;;,1]];
+        simu2=snet[<|"Ps_0"->validation[[select,"Ps_0"]],"LR_Random"->Table[RandomReal[NormalDistribution[0,1],dLatent*10],Length[select]]|>][[;;,1]];
+        simuO=snet2[<|"Ps_0"->validation[[select,"Ps_0"]],"VAE_Random"->Table[RandomReal[NormalDistribution[0,1],dLatent*10],Length[select]],
+            "Po_0"->validation[[select,"Po_0"]]|>]["Output"][[;;,1]];
+       Framed[TableForm[Table[Map[MatrixPlot[#,ImageSize->200]&,{obser[[i]],raw[[i]],simu1[[i]],simu2[[i]],simuO[[i]]}],{i,Length[simu1]}],TableSpacing->{0, 0},
+       TableAlignments->Center,
+       TableHeadings->{Table[Rotate[Style["Case "<>ToString[i],{FontFamily->"Arial",15}],Pi/2],{i,l}],
+         Map[Style[#,{FontFamily->"Arial",15}]&,{"Observation","Regression","\!\(\*SubscriptBox[\(BicycleGAN\), \(1\)]\)","\!\(\*SubscriptBox[\(BicycleGAN\), \(2\)]\)","\!\(\*SubscriptBox[\(BicycleGAN\), \(AE\)]\)"}]}]]]
   
 batch=128;
 NetTrain[BicycleNet,
