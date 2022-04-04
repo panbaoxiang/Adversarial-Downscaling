@@ -1,10 +1,5 @@
-~
-~
-~
-~
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         191,96        Bot
 SetDirectory["/data/home/scy0446/run/Data"];
-months=DateRange[{1979,1,1},{1979,12,1},"Month"];
+months=DateRange[{1979,1,1},{1989,12,1},"Month"];
 p=Block[{tempt=Table[Block[{},Print[months[[i]]];Import["N_"<>DateString[months[[i]],{"CONUS_","Year","Month",".mx"}]]["data"]],{i,Length[months]}]},
         tempt=tempt[[;;,1]];
         NumericArray[Flatten[Normal[tempt],1],"Real32"]];
@@ -192,7 +187,7 @@ trained=NetTrain[BicycleNet,
           "LR_Random"->Table[RandomReal[NormalDistribution[0,1],dLatent*5*10],batch],
           "VAE_Random"->Table[RandomReal[NormalDistribution[0,1],dLatent*5*10],batch]|>]],
        "RoundLength" -> seq},
-   LossFunction ->{"VAE_Fake_Loss"->Scaled[1],"VAE_True_Loss"->Scaled[1],"VAE_MSE_Loss"->Scaled[-50],"KL_Loss"->Scaled[-1],
+   LossFunction ->{"VAE_Fake_Loss"->Scaled[1],"VAE_True_Loss"->Scaled[1],"VAE_MSE_Loss"->Scaled[-100],"KL_Loss"->Scaled[-1],
                     "LR_Fake_Loss"->Scaled[1],"LR_True_Loss"->Scaled[1],"LR_MSE_Loss"->Scaled[-1]},
     TrainingUpdateSchedule -> {"VAE_Discriminator","LR_Discriminator","VAE_Encoder","VAE_DynamicNet"|"LR_DynamicNet"},
     LearningRateMultipliers -> {"VAE_Discriminator" -> 1, "LR_Discriminator"->1,
@@ -204,3 +199,6 @@ trained=NetTrain[BicycleNet,
     TargetDevice->"GPU",
     MaxTrainingRounds->500,
     Method -> {"ADAM", "Beta1" -> 0.5, "LearningRate" -> 10^-4, "WeightClipping" -> {"VAE_Discriminator"->.5*10^-1,"LR_Discriminator"->.5*10^-1}}];
+~
+~
+~
