@@ -1,5 +1,6 @@
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         7,1           35%
 SetDirectory["/data/home/scy0446/run/Data"];
-months=DateRange[{1979,1,1},{1992,10,1},"Month"];
+months=DateRange[{1979,1,1},{1998,10,1},"Month"];
 p=Block[{tempt=Table[Block[{},Print[months[[i]]];Import["N_"<>DateString[months[[i]],{"CONUS_","Year","Month",".mx"}]]["data"]],{i,Length[months]}]},
         tempt=tempt[[;;,1]];
         NumericArray[Flatten[Normal[tempt],1],"Real32"]];
@@ -149,14 +150,13 @@ Report[net_]:=Block[{nnet,select=RandomSample[Range[Length[validation]],1000],m=
   msimu=Map[Mean,Normal[simu]];
   mse=Mean[Flatten[(msimu-obser)^2]];
   Print[{GlobeLoss,mse}];
+  corr=Quiet[Table[Correlation[msimu[[;;,1,i,j]],obser[[;;,1,i,j]]],{i,40},{j,80}]];
+  Print[Mean[Select[Flatten[corr],NumberQ]]];
   If[mse<GlobeLoss,
-   Block[{corr},Set[GlobeLoss,mse];
-            corr=Quiet[Table[Correlation[msimu[[;;,1,i,j]],obser[[;;,1,i,j]]],{i,40},{j,80}]];
-            Print[Mean[Select[Flatten[corr],NumberQ]]];
-           Export["/data/home/scy0446/run/Code/CVAEGAN.mx",net]]]];
+   Block[{},Set[GlobeLoss,mse];Export["/data/home/scy0446/run/Code/CVAEGAN.mx",net]]]];
 
 (*
-batch=128;
+batch=1024;
 trained=NetTrain[CVAEGAN,
         {Function[Block[{select},
         select=RandomSample[Range[sep],batch];
@@ -171,15 +171,15 @@ trained=NetTrain[CVAEGAN,
         LossFunction ->{"MSE_Loss"->Scaled[-1],"KL_Loss"->Scaled[-10^-4],"Reconstruction_Loss"->Scaled[-1],"True_1"->Scaled[.1],"False_1"->Scaled[.1],"True_2"->Scaled[.1],"False_2"->Scaled[.1]},
         (*TrainingUpdateSchedule -> {"discriminate","discriminate2","encoder","dynamic","dynamic2"},*)
         LearningRateMultipliers -> {"discriminate" -> 1, "discriminate2"->1,"encoder"->-1,"dynamic"->-1,"dynamic2"->-1,"scale"->0,"scale2"->0},
-        TargetDevice->"GPU",
+        TargetDevice->{"GPU",All},
         BatchSize->batch,
-        Method -> {"ADAM", "Beta1" -> 0.5, "LearningRate" -> 10^-5, "WeightClipping" -> {"discriminate"->7*10^-2,"discriminate2"->7*10^-2}},
+        Method -> {"ADAM", "Beta1" -> 0.5, "LearningRate" -> 10^-4, "GradientClipping" -> {"discriminate"->10^-1,"discriminate2"->10^-1}},
         TrainingProgressReporting->{{Function@Report[#Net], "Interval" -> Quantity[1, "Rounds"]},"Print"}];
 
 CVAE=trained;
 net=NetExtract[CVAE,"dynamic2"];
-m=50;
-l=80;
+m=10;
+l=1000;
 obser=validation[[;;l,"P"]];
 simu=Table[net[<|"Latent"->Table[RandomReal[NormalDistribution[0,1],{dLatent,5,10}],m],
                  "Dynamics"->Table[validation[[i,"Dynamics"]],m],
@@ -188,6 +188,9 @@ Table[Correlation[Flatten[Normal[simu[[i,o]]]],Flatten[Normal[obser[[i]]]]],{i,l
 Table[Correlation[Flatten[Mean[Normal[simu[[i,;;]]]]],Flatten[Normal[obser[[i]]]]],{i,l}]
 Export["/data/home/scy0446/run/tempt.mx",{simu,obser}]
 *)
+~
+~
+~
 ~
 ~
 ~
