@@ -24,7 +24,7 @@ Print["Loaded"];
 length=Length[p];
 sep=Round[length*0.8];
 (*starting from 2004.8.6*)
-(*training=Table[<|"P"->p[[i]],"Dynamics"->dynamics[[i]],"Static"->ele|>,{i,sep}];*)
+training=Table[<|"P"->p[[i]],"Dynamics"->dynamics[[i]],"Static"->ele|>,{i,sep}];
 validation=Table[Block[{start,dPosition,pPosition},
         start={RandomSample[Range[Length[dlat]-size[[1]]]][[1]],RandomSample[Range[Length[dlon]-size[[2]]]][[1]]};
         dPosition={{start[[1]],start[[1]]+size[[1]]-1},{start[[2]],start[[2]]+size[[2]]-1}};
@@ -34,14 +34,14 @@ validation=Table[Block[{start,dPosition,pPosition},
           "Dynamics"->dynamics[[i,;;,;;,dPosition[[1,1]];;dPosition[[1,2]],dPosition[[2,1]];;dPosition[[2,2]]]],
           "Static"->ele[[;;,pPosition[[1,1]];;pPosition[[1,2]],pPosition[[2,1]];;pPosition[[2,2]]]]|>],{i,sep+1,length},{sample,10}];
 
-training=Table[Block[{start,dPosition,pPosition},
+(*training=Table[Block[{start,dPosition,pPosition},
         start={RandomSample[Range[Length[dlat]-size[[1]]]][[1]],RandomSample[Range[Length[dlon]-size[[2]]]][[1]]};
         dPosition={{start[[1]],start[[1]]+size[[1]]-1},{start[[2]],start[[2]]+size[[2]]-1}};
         pPosition={{Position[plat,dlat[[start[[1]]]]+0.25][[1,1]],Position[plat,dlat[[start[[1]]+size[[1]]-1]]-0.25][[1,1]]-1},
            {Position[plon,dlon[[start[[2]]]]-0.25][[1,1]],Position[plon,dlon[[start[[2]]+size[[2]]-1]]+0.25][[1,1]]-1}};
         <|"P"->p[[i,;;,pPosition[[1,1]];;pPosition[[1,2]],pPosition[[2,1]];;pPosition[[2,2]]]],
           "Dynamics"->dynamics[[i,;;,;;,dPosition[[1,1]];;dPosition[[1,2]],dPosition[[2,1]];;dPosition[[2,2]]]],
-          "Static"->ele[[;;,pPosition[[1,1]];;pPosition[[1,2]],pPosition[[2,1]];;pPosition[[2,2]]]]|>],{i,sep},{sample,10}];
+          "Static"->ele[[;;,pPosition[[1,1]];;pPosition[[1,2]],pPosition[[2,1]];;pPosition[[2,2]]]]|>],{i,sep},{sample,10}];*)
 
 dInput={15,3,16,32};
 dOutput={80,160};
@@ -100,7 +100,17 @@ Report[net_,ValidationLoss_]:=Block[{},
         Export["/data/home/scy0446/run/Code/2023_4_23_Patch_ResNet.mx",net]]]];
 
 batch=256;
-trained=NetTrain[DynamicNet,RandomSample[Flatten[training]],
+trained=NetTrain[DynamicNet,
+  {Function[Block[{select,start,dPosition,pPosition},
+        select=RandomSample[Range[Length[training]],batch];
+        start=Table[{RandomSample[Range[Length[dlat]-size[[1]]]][[1]],RandomSample[Range[Length[dlon]-size[[2]]]][[1]]},{batch}];
+        dPosition=Table[{{start[[i,1]],start[[i,1]]+size[[1]]-1},{start[[i,2]],start[[i,2]]+size[[2]]-1}},{i,batch}];
+        pPosition=Table[{{Position[plat,dlat[[start[[i,1]]]]+0.25][[1,1]],Position[plat,dlat[[start[[i,1]]+size[[1]]-1]]-0.25][[1,1]]-1},
+           {Position[plon,dlon[[start[[i,2]]]]-0.25][[1,1]],Position[plon,dlon[[start[[i,2]]+size[[2]]-1]]+0.25][[1,1]]-1}},{i,batch}];
+        <|"Dynamics"->Table[training[[select[[i]],"Dynamics"]][[;;,;;,dPosition[[i,1,1]];;dPosition[[i,1,2]],dPosition[[i,2,1]];;dPosition[[i,2,2]]]],{i,batch}],
+          "Static"->Table[ele[[;;,pPosition[[i,1,1]];;pPosition[[i,1,2]],pPosition[[i,2,1]];;pPosition[[i,2,2]]]],{i,batch}],
+          "P"->Table[training[[select[[i]],"P"]][[;;,pPosition[[i,1,1]];;pPosition[[i,1,2]],pPosition[[i,2,1]];;pPosition[[i,2,2]]]],{i,batch}]|>]],
+       "RoundLength" -> sep*10},
         ValidationSet->Flatten[validation],
         TargetDevice->{"GPU",All},
         BatchSize->batch,
